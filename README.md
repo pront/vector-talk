@@ -1,25 +1,23 @@
-# Vector: One Agent to Rule Them All?
+# vector-talk
 
-_GitHub Maintainer Month · NYC · 2026_
+Links page for my talk **Vector: One Agent to Rule Them All?** (GitHub
+Maintainer Month · NYC · 2026).
 
-## Vector
+Live: <https://pront.github.io/vector-talk/>
 
-- Docs & install: <https://vector.dev>
-- Source, issues, PRs: <https://github.com/vectordotdev/vector>
-- How to contribute: <https://github.com/vectordotdev/vector/blob/master/CONTRIBUTING.md>
+## Run locally
 
-## Quad9 case study
+```sh
+python3 -m http.server 8000 & open http://localhost:8000
+```
 
-- DNS-OARC Oct 2024 talk: <https://indico.dns-oarc.net/event/51/contributions/1092/>
+Or, with no-cache during edits:
 
-## Datadog
+```sh
+npx http-server -c-1 -o
+```
 
-- Datadog Community Open Source Engineering (COSE) team: <https://opensource.datadoghq.com/about/#the-community-open-source-engineering-team>
+## Editing
 
-## 🎉 We're hiring (COSE / Quickwit)
-
-**[View the role →](https://careers.datadoghq.com/detail/7555524)**
-
-## Find me
-
-- GitHub: <https://github.com/pront>
+`index.html` is the source of truth — it's what GitHub Pages serves
+from `main`. Just edit, commit, push (via PR), and Pages redeploys.
