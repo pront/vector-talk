@@ -18,30 +18,10 @@
                 line-height: 1.6;
                 color: #1a1a1a;
             }
-            @media (prefers-color-scheme: dark) {
-                body {
-                    color: #e8e6f5;
-                    background: #1f1147;
-                }
-                a {
-                    color: #c8b8ff;
-                }
-                h2 {
-                    color: #ffd6a5;
-                }
-                .hire-cta {
-                    color: #1f1147 !important;
-                }
-            }
             h1 {
                 font-size: 2.2rem;
                 margin-bottom: 0.2em;
                 color: #5b21b6;
-            }
-            @media (prefers-color-scheme: dark) {
-                h1 {
-                    color: #c8b8ff;
-                }
             }
             .sub {
                 opacity: 0.65;
@@ -50,9 +30,6 @@
             h2 {
                 margin-top: 1.8em;
                 color: #5b21b6;
-                border-left: 4px solid;
-                border-image: linear-gradient(180deg, #f59e0b, #ec4899) 1;
-                padding-left: 0.6em;
             }
             ul {
                 padding-left: 1.2em;
@@ -77,16 +54,22 @@
                 box-shadow: 0 6px 24px rgba(236, 72, 153, 0.25);
                 text-align: center;
             }
+            .hire-text {
+                font-size: 1.4rem;
+                font-weight: 700;
+                color: #000;
+                margin-bottom: 0.3em;
+            }
             .hire-cta {
                 display: inline-block;
                 margin-top: 0.4em;
                 padding: 0.7em 1.4em;
                 border-radius: 999px;
-                background: linear-gradient(90deg, #ec4899, #f59e0b);
+                background: linear-gradient(90deg, #7c3aed, #5b21b6);
                 color: #fff !important;
                 font-weight: 700;
                 text-decoration: none;
-                box-shadow: 0 4px 14px rgba(236, 72, 153, 0.45);
+                box-shadow: 0 4px 14px rgba(91, 33, 182, 0.45);
                 animation: pulse 1.8s ease-in-out infinite;
             }
             .hire-cta:hover {
@@ -96,15 +79,87 @@
             @keyframes pulse {
                 0%,
                 100% {
-                    box-shadow: 0 4px 14px rgba(236, 72, 153, 0.45);
+                    box-shadow: 0 4px 14px rgba(91, 33, 182, 0.45);
                 }
                 50% {
-                    box-shadow: 0 4px 28px rgba(236, 72, 153, 0.85);
+                    box-shadow: 0 4px 28px rgba(124, 58, 237, 0.85);
                 }
             }
+            .theme-toggle {
+                position: fixed;
+                top: 16px;
+                right: 16px;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                border: 1px solid rgba(91, 33, 182, 0.25);
+                background: rgba(255, 255, 255, 0.7);
+                backdrop-filter: blur(6px);
+                font-size: 1.2rem;
+                line-height: 1;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition:
+                    background 0.2s ease,
+                    transform 0.15s ease;
+            }
+            .theme-toggle:hover {
+                transform: scale(1.08);
+            }
+            :root[data-theme="dark"] body {
+                color: #e8e6f5;
+                background: #1f1147;
+            }
+            :root[data-theme="dark"] h1,
+            :root[data-theme="dark"] h2 {
+                color: #c8b8ff;
+            }
+            :root[data-theme="dark"] a {
+                color: #ffd6a5;
+            }
+            :root[data-theme="dark"] .hire-text {
+                color: #1f1147;
+            }
+            :root[data-theme="dark"] .hire-box a {
+                color: #5b21b6;
+            }
+            :root[data-theme="dark"] .hire-cta {
+                color: #fff !important;
+            }
+            :root[data-theme="dark"] .theme-toggle {
+                background: rgba(255, 255, 255, 0.12);
+                border-color: rgba(200, 184, 255, 0.4);
+                color: #ffd6a5;
+            }
         </style>
+        <script>
+            (function () {
+                var saved = localStorage.getItem("theme");
+                var prefersDark =
+                    window.matchMedia &&
+                    window.matchMedia("(prefers-color-scheme: dark)").matches;
+                var theme = saved || (prefersDark ? "dark" : "light");
+                document.documentElement.setAttribute("data-theme", theme);
+            })();
+        </script>
     </head>
     <body>
+        <button
+            class="theme-toggle"
+            type="button"
+            aria-label="Toggle color theme"
+            onclick="(function(){var r=document.documentElement;var t=r.getAttribute('data-theme')==='dark'?'light':'dark';r.setAttribute('data-theme',t);localStorage.setItem('theme',t);document.querySelector('.theme-toggle').textContent=t==='dark'?'☀️':'🌙';})()"
+        >
+            🌙
+        </button>
+        <script>
+            document.querySelector(".theme-toggle").textContent =
+                document.documentElement.getAttribute("data-theme") === "dark"
+                    ? "☀️"
+                    : "🌙";
+        </script>
         <h1>Vector: One Agent to Rule Them All?</h1>
         <p class="sub">GitHub Maintainer Month · NYC · 2026</p>
 
@@ -151,7 +206,7 @@
         </ul>
 
         <div class="hire-box">
-            <div>🎉 We're hiring! (COSE / Quickwit) 🎉</div>
+            <div class="hire-text">We're hiring! (COSE / Quickwit) 🎉</div>
             <a class="hire-cta" href="https://careers.datadoghq.com/detail/7555524"
                 >View the role →</a
             >
