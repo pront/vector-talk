@@ -1,9 +1,9 @@
-# vector-talk
+# maintainer-month-vector-2026
 
 Links page for my talk **Vector: One Agent to Rule Them All?** (GitHub
 Maintainer Month · NYC · 2026).
 
-Live: <https://pront.github.io/vector-talk/>
+Live: <https://pront.github.io/maintainer-month-vector-2026/>
 
 ## Run locally
 
