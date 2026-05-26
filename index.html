@@ -85,12 +85,38 @@
                     box-shadow: 0 4px 28px rgba(124, 58, 237, 0.85);
                 }
             }
+            .slides-actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.6em;
+                margin: 0.8em 0 1em;
+            }
+            .slides-btn {
+                display: inline-block;
+                padding: 0.55em 1.1em;
+                border-radius: 999px;
+                font-weight: 600;
+                text-decoration: none;
+                background: linear-gradient(90deg, #7c3aed, #5b21b6);
+                color: #fff !important;
+                box-shadow: 0 4px 14px rgba(91, 33, 182, 0.35);
+            }
+            .slides-btn-ghost {
+                background: transparent;
+                color: #5b21b6 !important;
+                border: 1px solid rgba(91, 33, 182, 0.4);
+                box-shadow: none;
+            }
+            :root[data-theme="dark"] .slides-btn-ghost {
+                color: #c8b8ff !important;
+                border-color: rgba(200, 184, 255, 0.4);
+            }
             .slides {
                 position: relative;
                 width: 100%;
                 /* 16:9 slide + ~48px for the PDF viewer toolbar */
                 padding-top: calc(56.25% + 48px);
-                margin: 1.2em 0 2em;
+                margin: 0 0 2em;
                 border-radius: 12px;
                 overflow: hidden;
                 box-shadow: 0 6px 24px rgba(91, 33, 182, 0.18);
@@ -103,10 +129,12 @@
                 height: 100%;
                 border: 0;
             }
-            .slides-fallback {
-                font-size: 0.9rem;
-                opacity: 0.7;
-                margin-top: 0.4em;
+            /* Mobile browsers don't render PDF-in-iframe with usable controls,
+               so hide the embed and rely on the action buttons above. */
+            @media (max-width: 640px), (hover: none) and (pointer: coarse) {
+                .slides {
+                    display: none;
+                }
             }
             .theme-toggle {
                 position: fixed;
@@ -187,6 +215,21 @@
         <p class="sub">GitHub Maintainer Month · NYC · 2026</p>
 
         <h2>Slides</h2>
+        <div class="slides-actions">
+            <a
+                class="slides-btn"
+                href="COSE%20-%20Vector%20-%20GitHub%20Maintainer%20Month%20(May%202026).pdf"
+                target="_blank"
+                rel="noopener"
+                >Open slides ↗</a
+            >
+            <a
+                class="slides-btn slides-btn-ghost"
+                href="COSE%20-%20Vector%20-%20GitHub%20Maintainer%20Month%20(May%202026).pdf"
+                download
+                >Download PDF</a
+            >
+        </div>
         <div class="slides">
             <iframe
                 src="COSE%20-%20Vector%20-%20GitHub%20Maintainer%20Month%20(May%202026).pdf#view=Fit&pagemode=none&toolbar=1&navpanes=0&scrollbar=0"
@@ -194,12 +237,6 @@
                 loading="lazy"
             ></iframe>
         </div>
-        <p class="slides-fallback">
-            Viewer not loading?
-            <a href="COSE%20-%20Vector%20-%20GitHub%20Maintainer%20Month%20(May%202026).pdf"
-                >Download the PDF</a
-            >.
-        </p>
 
         <h2>Vector</h2>
         <ul>
