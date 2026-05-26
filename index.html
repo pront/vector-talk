@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Vector: One Agent to Rule Them All? — Pavlos Rontidis at GitHub Maintainer Month 2026</title>
+        <meta
+            name="description"
+            content="Slides and resources from 'Vector: One Agent to Rule Them All?' — a talk by Pavlos Rontidis and Adrien Guillo at GitHub Maintainer Month NYC 2026."
+        />
+        <meta name="keywords" content="vector, observability, rust, datadog, open source, logs, metrics, traces, otel, opentelemetry" />
+        <meta property="og:type" content="website" />
+        <meta
+            property="og:url"
+            content="https://pront.github.io/maintainer-month-vector-2026/"
+        />
+        <meta
+            property="og:title"
+            content="Vector: One Agent to Rule Them All? — GitHub Maintainer Month 2026"
+        />
+        <meta
+            property="og:description"
+            content="Slides and resources from Pavlos Rontidis and Adrien Guillo's talk on Vector at GitHub Maintainer Month NYC 2026."
+        />
+        <meta name="twitter:card" content="summary" />
+        <style>
+            :root {
+                color-scheme: light dark;
+            }
+            html {
+                background: radial-gradient(
+                        ellipse at top,
+                        #fffefb 0%,
+                        #fdfcf6 60%,
+                        #faf8ef 100%
+                    )
+                    fixed;
+            }
+            body {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+                    sans-serif;
+                max-width: 720px;
+                margin: 40px auto;
+                padding: 0 24px;
+                line-height: 1.6;
+                color: #1a1a1a;
+                background: transparent;
+            }
+            h1 {
+                font-size: 2.2rem;
+                margin-bottom: 0.2em;
+                color: #5b21b6;
+            }
+            .sub {
+                opacity: 0.65;
+                margin-bottom: 2em;
+            }
+            h2 {
+                margin-top: 1.8em;
+                color: #5b21b6;
+            }
+            h3 {
+                margin-top: 1em;
+                margin-bottom: 0.3em;
+                font-size: 1.1rem;
+                color: #4c1d95;
+            }
+            ul {
+                padding-left: 1.2em;
+            }
+            li {
+                margin-bottom: 0.5em;
+            }
+            a {
+                color: #5b21b6;
+                text-decoration: underline;
+            }
+            .hire-box {
+                margin: 1em 0;
+                padding: 1.2em 1.4em;
+                border-radius: 14px;
+                background: #fde68a;
+                box-shadow: 0 6px 24px rgba(202, 138, 4, 0.25);
+                text-align: center;
+            }
+            .hire-text {
+                font-size: 1.4rem;
+                font-weight: 700;
+                color: #000;
+                margin-bottom: 0.3em;
+            }
+            .hire-cta {
+                display: inline-block;
+                margin-top: 0.4em;
+                padding: 0.7em 1.4em;
+                border-radius: 999px;
+                background: linear-gradient(90deg, #7c3aed, #5b21b6);
+                color: #fff !important;
+                font-weight: 700;
+                text-decoration: none;
+                box-shadow: 0 4px 14px rgba(91, 33, 182, 0.45);
+                animation: pulse 1.8s ease-in-out infinite;
+            }
+            .hire-cta:hover {
+                transform: translateY(-2px);
+                transition: transform 0.15s ease;
+            }
+            @keyframes pulse {
+                0%,
+                100% {
+                    box-shadow: 0 4px 14px rgba(91, 33, 182, 0.45);
+                }
+                50% {
+                    box-shadow: 0 4px 28px rgba(124, 58, 237, 0.85);
+                }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .hire-cta,
+                .hire-cta:hover,
+                .theme-toggle {
+                    animation: none;
+                    transition: none;
+                }
+            }
+            :focus-visible {
+                outline: 2px solid #7c3aed;
+                outline-offset: 2px;
+                border-radius: 4px;
+            }
+            .slides {
+                position: relative;
+                width: 100%;
+                /* 16:9 slide + ~48px for the PDF viewer toolbar */
+                padding-top: calc(56.25% + 48px);
+                margin: 1.2em 0 2em;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 6px 24px rgba(91, 33, 182, 0.18);
+                background: #000;
+            }
+            .slides iframe {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                border: 0;
+            }
+            .slides-mobile {
+                display: none;
+                margin: 1.2em 0 2em;
+                padding: 1.4em;
+                border-radius: 12px;
+                background: rgba(91, 33, 182, 0.06);
+                border: 1px solid rgba(91, 33, 182, 0.15);
+                text-align: center;
+            }
+            .slides-mobile a {
+                display: inline-block;
+                margin-top: 0.6em;
+                padding: 0.7em 1.4em;
+                border-radius: 999px;
+                background: linear-gradient(90deg, #7c3aed, #5b21b6);
+                color: #fff !important;
+                font-weight: 600;
+                text-decoration: none;
+            }
+            @media (max-width: 640px) {
+                .slides,
+                .slides-fallback {
+                    display: none;
+                }
+                .slides-mobile {
+                    display: block;
+                }
+            }
+            :root[data-theme="dark"] .slides-mobile {
+                background: rgba(200, 184, 255, 0.08);
+                border-color: rgba(200, 184, 255, 0.2);
+            }
+            .slides-fallback {
+                font-size: 0.9rem;
+                opacity: 0.7;
+                margin-top: 0.4em;
+            }
+            .theme-toggle {
+                position: fixed;
+                top: 16px;
+                right: 16px;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                border: 1px solid rgba(91, 33, 182, 0.25);
+                background: rgba(255, 255, 255, 0.7);
+                backdrop-filter: blur(6px);
+                font-size: 1.2rem;
+                line-height: 1;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition:
+                    background 0.2s ease,
+                    transform 0.15s ease;
+            }
+            .theme-toggle:hover {
+                transform: scale(1.08);
+            }
+            :root[data-theme="dark"],
+            :root[data-theme="dark"] body {
+                background: radial-gradient(
+                        ellipse at top,
+                        #1a1530 0%,
+                        #121214 55%,
+                        #0a0a0c 100%
+                    )
+                    fixed;
+            }
+            :root[data-theme="dark"] body {
+                color: #f5f5f7;
+            }
+            :root[data-theme="dark"] h1,
+            :root[data-theme="dark"] h2,
+            :root[data-theme="dark"] h3 {
+                color: #c8b8ff;
+            }
+            :root[data-theme="dark"] a {
+                color: #ffd6a5;
+            }
+            :root[data-theme="dark"] .hire-text {
+                color: #1f1147;
+            }
+            :root[data-theme="dark"] .hire-box a {
+                color: #5b21b6;
+            }
+            :root[data-theme="dark"] .hire-cta {
+                color: #fff !important;
+            }
+            :root[data-theme="dark"] .theme-toggle {
+                background: rgba(255, 255, 255, 0.12);
+                border-color: rgba(200, 184, 255, 0.4);
+                color: #ffd6a5;
+            }
+        </style>
+        <script>
+            (function () {
+                var saved = localStorage.getItem("theme");
+                var prefersDark =
+                    window.matchMedia &&
+                    window.matchMedia("(prefers-color-scheme: dark)").matches;
+                var theme = saved || (prefersDark ? "dark" : "light");
+                document.documentElement.setAttribute("data-theme", theme);
+            })();
+        </script>
+    </head>
+    <body>
+        <button
+            class="theme-toggle"
+            type="button"
+            aria-label="Toggle color theme"
+        >
+            🌙
+        </button>
+        <script>
+            (function () {
+                var root = document.documentElement;
+                var btn = document.querySelector(".theme-toggle");
+                var setIcon = function () {
+                    btn.textContent =
+                        root.getAttribute("data-theme") === "dark"
+                            ? "☀️"
+                            : "🌙";
+                };
+                setIcon();
+                btn.addEventListener("click", function () {
+                    var next =
+                        root.getAttribute("data-theme") === "dark"
+                            ? "light"
+                            : "dark";
+                    root.setAttribute("data-theme", next);
+                    localStorage.setItem("theme", next);
+                    setIcon();
+                });
+                if (window.matchMedia) {
+                    var mq = window.matchMedia("(prefers-color-scheme: dark)");
+                    mq.addEventListener("change", function (e) {
+                        if (!localStorage.getItem("theme")) {
+                            root.setAttribute(
+                                "data-theme",
+                                e.matches ? "dark" : "light",
+                            );
+                            setIcon();
+                        }
+                    });
+                }
+            })();
+        </script>
+        <main>
+        <h1>GitHub Maintainer Month 2026</h1>
+        <p class="sub">
+            Pavlos Rontidis &amp; Adrien Guillo · Datadog · NYC
+</p>
+
+        <h2>Slides</h2>
+        <ul>
+            <li>Vector: One Agent to Rule Them All?</li>
+            <li>Quickwit: Subsecond Full-Text Search on Object Storage</li>
+        </ul>
+        <div class="slides">
+            <iframe
+                src="COSE%20-%20Vector%20-%20GitHub%20Maintainer%20Month%20(May%202026).pdf?v=2#view=Fit&pagemode=none&toolbar=1&navpanes=0&scrollbar=0"
+                title="Vector talk slides"
+                loading="lazy"
+            ></iframe>
+        </div>
+        <p class="slides-fallback">
+            Viewer not loading?
+            <a href="COSE%20-%20Vector%20-%20GitHub%20Maintainer%20Month%20(May%202026).pdf"
+                >Download the PDF</a
+            >.
+        </p>
+        <div class="slides-mobile">
+            <a
+                href="COSE%20-%20Vector%20-%20GitHub%20Maintainer%20Month%20(May%202026).pdf"
+                >View Slides →</a
+            >
+        </div>
+        <h2>Datadog</h2>
+        <ul>
+            <li>
+                <a
+                    href="https://opensource.datadoghq.com/about/#the-community-open-source-engineering-team"
+                    >About the COSE team</a
+                >
+            </li>
+        </ul>
+
+        <div class="hire-box">
+            <div class="hire-text">We're hiring! (COSE / Quickwit) 🎉</div>
+            <a class="hire-cta" href="https://careers.datadoghq.com/detail/7555524"
+                >Apply here →</a
+            >
+        </div>
+
+        <h2>Vector</h2>
+        <ul>
+            <li><a href="https://vector.dev">Docs &amp; install</a></li>
+            <li>
+                <a href="https://github.com/vectordotdev/vector"
+                    >Source, issues, PRs</a
+                >
+            </li>
+            <li>
+                <a
+                    href="https://github.com/vectordotdev/vector/blob/master/CONTRIBUTING.md"
+                    >How to contribute</a
+                >
+            </li>
+            <li>
+                <a
+                    href="https://github.com/vectordotdev/github-tools/blob/main/trends/vector.md"
+                    >Vector trends</a
+                >
+            </li>
+            <li>
+                <a
+                    href="https://openai.com/index/harness-engineering/#increasing-application-legibility"
+                    >Vector in OpenAI's observability stack</a
+                >
+            </li>
+        </ul>
+
+        <h2>Quickwit</h2>
+        <ul>
+            <li>
+                <a href="https://github.com/quickwit-oss/quickwit">Quickwit repo</a>
+            </li>
+            <li>
+                <a href="https://github.com/quickwit-oss/tantivy">Tantivy repo</a>
+            </li>
+        </ul>
+
+        <h2>Quad9 Case Study</h2>
+        <ul>
+            <li>
+                <a
+                    href="https://indico.dns-oarc.net/event/51/contributions/1092/"
+                    >DNS-OARC Oct 2024 talk</a
+                >
+            </li>
+            <li>
+                <a
+                    href="https://github.com/vectordotdev/vector/pulls?q=sort%3Aupdated-desc+is%3Apr+author%3Aesensar+is%3Amerged+"
+                    >Merged PRs by @esensar</a
+                >
+            </li>
+        </ul>
+
+        <h2>Find us</h2>
+        <p><strong>Pavlos Rontidis</strong></p>
+        <ul>
+            <li><a href="https://github.com/pront">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/prontidis/">LinkedIn</a></li>
+        </ul>
+        <p><strong>Adrien Guillo</strong></p>
+        <ul>
+            <li><a href="https://github.com/guilload">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/guilload/">LinkedIn</a></li>
+        </ul>
+        </main>
+    </body>
+</html>
