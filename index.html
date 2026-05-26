@@ -85,6 +85,29 @@
                     box-shadow: 0 4px 28px rgba(124, 58, 237, 0.85);
                 }
             }
+            .slides {
+                position: relative;
+                width: 100%;
+                /* 16:9 slide + ~48px for the PDF viewer toolbar */
+                padding-top: calc(56.25% + 48px);
+                margin: 1.2em 0 2em;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 6px 24px rgba(91, 33, 182, 0.18);
+                background: #000;
+            }
+            .slides iframe {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                border: 0;
+            }
+            .slides-fallback {
+                font-size: 0.9rem;
+                opacity: 0.7;
+                margin-top: 0.4em;
+            }
             .theme-toggle {
                 position: fixed;
                 top: 16px;
@@ -163,6 +186,21 @@
         <h1>Vector: One Agent to Rule Them All?</h1>
         <p class="sub">GitHub Maintainer Month · NYC · 2026</p>
 
+        <h2>Slides</h2>
+        <div class="slides">
+            <iframe
+                src="COSE%20-%20Vector%20-%20GitHub%20Maintainer%20Month%20(May%202026).pdf#view=Fit&pagemode=none&toolbar=1&navpanes=0&scrollbar=0"
+                title="Vector talk slides"
+                loading="lazy"
+            ></iframe>
+        </div>
+        <p class="slides-fallback">
+            Viewer not loading?
+            <a href="COSE%20-%20Vector%20-%20GitHub%20Maintainer%20Month%20(May%202026).pdf"
+                >Download the PDF</a
+            >.
+        </p>
+
         <h2>Vector</h2>
         <ul>
             <li>
@@ -186,6 +224,12 @@
                 <a
                     href="https://github.com/vectordotdev/github-tools/blob/main/trends/vector.md"
                     >github-tools/trends/vector.md</a
+                >
+            </li>
+            <li>
+                Vector in OpenAI's observability stack:
+                <a href="https://openai.com/index/harness-engineering/#increasing-application-legibility"
+                    >openai.com/index/harness-engineering</a
                 >
             </li>
         </ul>
