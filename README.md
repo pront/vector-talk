@@ -1,14 +1,16 @@
 # GitHub Maintainer Month 2026
 
-Companion page for two talks at **GitHub Maintainer Month NYC, May 2026** by
-[Pavlos Rontidis](https://github.com/pront) and
-[Adrien Guillo](https://github.com/guilload) (Datadog COSE team).
+Companion page for two talks at **GitHub Maintainer Month NYC, May 26 2026**,
+hosted at the Datadog NYC office, by [Pavlos Rontidis](https://github.com/pront)
+and [Adrien Guillo](https://github.com/guilload) (Datadog COSE team).
 
 - **Vector: One Agent to Rule Them All?** (Pavlos): Vector as a unified
   observability agent for logs, metrics, and traces.
 - **Quickwit: Subsecond Full-Text Search on Object Storage** (Adrien).
 
-Live: <https://pront.github.io/maintainer-month-vector-2026/>
+Companion Page: <https://pront.github.io/maintainer-month-vector-2026/>
+
+LinkedIn post: <https://www.linkedin.com/posts/githubmaintainermonth-github-datadog-share-7458192872484442113-LbSc/>
 
 ## Run locally
 
